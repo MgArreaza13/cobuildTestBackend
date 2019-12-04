@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from apps.tasks import models as tasks_models
 from django.utils.translation import gettext as _
-
+from django.db import transaction, IntegrityError, DatabaseError
 
 
 def create_task(user: User, data:dict) -> tasks_models.Task:
@@ -15,11 +15,12 @@ def create_task(user: User, data:dict) -> tasks_models.Task:
         :return: list of tasks
     """
     try:
-        task = tasks_models.Task.objects.create(
-            user=User.objects.get(id = user.id),
-            title=data.get('title'),
-            description=data.get('description'),
-            )
+        with transaction.atomic():
+            task = tasks_models.Task.objects.create(
+                user=User.objects.get(id = user.id),
+                title=data.get('title'),
+                description=data.get('description'),
+                )
     except Exception as e:
         raise ValueError(str(_("An error occurred while saving the task")))
     return task

@@ -48,7 +48,10 @@ class TaskOptionsView(APIView):
 			return Response({'detail': str(e)}, status=status.HTTP_403_FORBIDDEN)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		serializer = tasks_serializers.TasksSerializers(task, many=True).data
+		serializer_context = {
+			'request': request,
+		}
+		serializer = tasks_serializers.TasksSerializers(task, context=serializer_context, many=False).data
 		return Response(serializer, status=status.HTTP_200_OK)
 
 
@@ -61,7 +64,10 @@ class TaskOptionsView(APIView):
 			return Response({'detail': str(e)}, status=status.HTTP_403_FORBIDDEN)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		serializer = tasks_serializers.TasksSerializers(task, many=True).data
+		serializer_context = {
+			'request': request,
+		}
+		serializer = tasks_serializers.TasksSerializers(task,  context=serializer_context, many=False).data
 		return Response(serializer, status=status.HTTP_200_OK)
 	
 	def put(self, request, id_task):
@@ -73,7 +79,10 @@ class TaskOptionsView(APIView):
 			return Response({'detail': str(e)}, status=status.HTTP_403_FORBIDDEN)
 		except Exception as e:
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-		serializer = tasks_serializers.TasksSerializers(task, many=True).data
+		serializer_context = {
+			'request': request,
+		}
+		serializer = tasks_serializers.TasksSerializers(task, context=serializer_context, many=False).data
 		serializer['detail'] = str(_("You have edit task correctly"))
 		return Response(serializer, status=status.HTTP_200_OK)
 
