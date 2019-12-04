@@ -22,6 +22,7 @@ def create_task(user: User, data:dict) -> tasks_models.Task:
                 description=data.get('description'),
                 )
     except Exception as e:
+        print(e)
         raise ValueError(str(_("An error occurred while saving the task")))
     return task
 
@@ -52,6 +53,7 @@ def get_detail_task(user: User, id: int) -> tasks_models.Task:
         if(len(task) == 0): 
             raise NameError(str(_("Not found")))
     except tasks_models.Task.DoesNotExist as e:
+        print(e)
         raise NameError(str(_("Not found")))
     return task
 
@@ -70,6 +72,7 @@ def delete_task(user: User, id: int) -> str:
         task = tasks_models.Task.objects.get(id=id, user__id=user.id)
         task.delete()
     except tasks_models.Task.DoesNotExist as e:
+        print(e)
         raise NameError(str(_("error to delete")))
     return str(_("the task was deleted successfully"))
 
@@ -92,5 +95,6 @@ def update_task(user: User, data: dict ,id: int) -> tasks_models.Task:
         task.description = data.get('description')
         task.save()
     except DatabaseError as e:
+        print(e)
         raise NameError(str(_("error to update task")))
     return task

@@ -54,7 +54,6 @@ class TaskOptionsView(APIView):
 		serializer = tasks_serializers.TasksSerializers(task, context=serializer_context, many=False).data
 		return Response(serializer, status=status.HTTP_200_OK)
 
-
 	def get(self, request, id_task):
 		try:
 			task = tasks_services.get_detail_task(request.user, id_task)
