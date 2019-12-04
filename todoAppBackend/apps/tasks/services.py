@@ -3,6 +3,27 @@ from apps.tasks import models as tasks_models
 from django.utils.translation import gettext as _
 
 
+
+def create_task(user: User, data:dict) -> tasks_models.Task:
+    """
+        service to create task
+
+        :param user: user
+        :type user: Model User
+        :param data: information of task
+        :type data: dict
+        :return: list of tasks
+    """
+    try:
+        task = tasks_models.Task.objects.create(
+            user=User.objects.get(id = user.id),
+            title=data.get('title'),
+            description=data.get('description'),
+            )
+    except Exception as e:
+        raise ValueError(str(_("An error occurred while saving the task")))
+    return task
+
 def get_list_tasks(user: User) -> tasks_models.Task:
     """
         service to get list or tasks
