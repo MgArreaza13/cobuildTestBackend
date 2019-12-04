@@ -34,10 +34,11 @@ class TasksView(APIView):
 
 class TaskOptionsView(APIView):
 
-	permission_classes = (permissions.IsAuthenticated,)
 	"""
 		get the detail of tasks created by the user
+		contain cruds, creation, update, deleted, list, and search
 	"""
+	permission_classes = (permissions.IsAuthenticated,)
 	def get(self, request, id_task):
 		try:
 			task = tasks_services.get_detail_task(request.user, id_task)
@@ -49,3 +50,28 @@ class TaskOptionsView(APIView):
 			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 		serializer = tasks_serializers.TasksSerializers(task, many=True).data
 		return Response(serializer, status=status.HTTP_200_OK)
+	
+	def put(self, request, id_task):
+		try:
+			task = tasks_services.update_task(request.user, request.data, id_task)
+		except ValueError as e:
+			return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_403_FORBIDDEN)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		serializer = tasks_serializers.TasksSerializers(task, many=True).data
+		serializer['detail'] = str(_("You have edit task correctly"))
+		return Response(serializer, status=status.HTTP_200_OK)
+
+	def delete(self, request, id_task):
+		try:
+			message = tasks_services.delete_task(request.user, id_task)
+		except ValueError as e:
+			return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+		except PermissionDenied as e:
+			return Response({'detail': str(e)}, status=status.HTTP_403_FORBIDDEN)
+		except Exception as e:
+			return Response({"detail": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+		# serializer = tasks_serializers.TasksSerializers(task, many=True).data
+		return Response(message, status=status.HTTP_200_OK)

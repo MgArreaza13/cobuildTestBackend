@@ -5,4 +5,6 @@ from apps.tasks import views
 urlpatterns = [
     path('list/', views.TasksView.as_view(), name='list_tasks'),
     path('detail/<int:id_task>/', views.TaskOptionsView.as_view(), name='detail_task'),
+    path('edit/<int:id_task>/', views.TaskOptionsView.as_view(), name='detail_task'),
+    path('delete/<int:id_task>/', views.TaskOptionsView.as_view(), name='detail_task'),
 ]
