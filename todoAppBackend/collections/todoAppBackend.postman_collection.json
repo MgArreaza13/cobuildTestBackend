@@ -216,12 +216,12 @@
 							"urlencoded": [
 								{
 									"key": "username",
-									"value": "test",
+									"value": "jessisr92",
 									"type": "text"
 								},
 								{
 									"key": "password",
-									"value": "miguel",
+									"value": "miguel123",
 									"type": "text"
 								}
 							]
@@ -265,6 +265,70 @@
 								"api",
 								"accounts",
 								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "jessisr92",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "jessisr93@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "first_name",
+									"value": "jessica",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Salazar",
+									"type": "text"
+								},
+								{
+									"key": "password1",
+									"value": "miguel123",
+									"type": "text"
+								},
+								{
+									"key": "password2",
+									"value": "miguel123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/accounts/create/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"accounts",
+								"create",
 								""
 							]
 						}
