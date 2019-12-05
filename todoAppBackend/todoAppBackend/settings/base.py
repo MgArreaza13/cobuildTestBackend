@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    'djcelery_email',
     # localapps 
     'apps.tasks',
     'apps.accounts'
@@ -173,3 +174,23 @@ CORS_ALLOW_METHODS = (
     'POST',
     'PUT',
 )
+
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 522242880
+
+# CELERY STUFF
+BROKER_URL = 'redis://localhost:6379/10'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/10'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'b7000615.ferozo.com'
+EMAIL_HOST_USER = 'musculando@b7000615.ferozo.com'
+EMAIL_HOST_PASSWORD = 'Adolf5454@'
+EMAIL_PORT = 587
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'

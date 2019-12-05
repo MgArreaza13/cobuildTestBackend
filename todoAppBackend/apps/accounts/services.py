@@ -8,6 +8,8 @@ from django.core.exceptions import PermissionDenied
 import datetime as datetime_modules
 from apps.accounts import validations as accounts_validations
 from django.contrib.auth.hashers import make_password
+from apps.accounts import tasks as accounts_task
+from apps.accounts.tasks import welcome_email
 
 def login(data: dict) -> accounts_models.User:
 	"""
@@ -91,9 +93,8 @@ def register_user(data: dict, user: accounts_models.User):
 				email=email,
 				password=make_password(data.get('password1')),
 			)
+			if user_registered.email != "":
+				welcome_email.delay(user_registered.username, user_registered.email)
 		except Exception as e:
 			raise ValueError(str(_("An error occurred while saving the user")))
-	if user_registered.email != "":
-		# accounts_task.send_welcome_email(user_registered, password)
-		pass
 	return user_registered
