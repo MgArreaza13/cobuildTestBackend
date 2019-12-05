@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_auth',
     # localapps 
-    'apps.tasks'
+    'apps.tasks',
+    'apps.accounts'
 ]
 
 MIDDLEWARE = [
